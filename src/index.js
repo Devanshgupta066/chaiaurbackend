@@ -6,8 +6,15 @@ import connectDB from "./db/db.js"
 
 dotenv.config()
 
-connectDB();
-
+connectDB()
+.then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`Server is running at post : ${process.env.PORT}`);
+    })
+})
+.catch((err) => {
+    console.log("MONgO db connection field !!! ", err);
+})
 
 
 
@@ -26,7 +33,7 @@ connectDB();
 ( async () => {
     try{
         await mongoose.connect(`${process.env.MONGODB_URI}`);
-        app.on("error", (error) => {
+        app.on("errrror", (error) => {
             console.log("ERROR", error);
             throw error
         })
